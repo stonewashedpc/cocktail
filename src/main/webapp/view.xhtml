@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+
+	<title>CocktailMaker</title>
+
+	<b:navBar brand="CocktailMaker" brandHref="#" inverse="true">
+		<b:navbarLinks>
+			<b:navLink value="Home" href="index.xhtml"></b:navLink>
+			<b:navLink value="Einstellungen" href="configuration.xhtml"></b:navLink>
+		</b:navbarLinks>
+	</b:navBar>
+</h:head>
+
+<h:body>
+
+	<div id="header">
+		<ui:insert name="header">
+		</ui:insert>
+	</div>
+
+	<div id="content"
+		style="margin-top: 100px; margin-left: 100px; margin-right: 100px">
+		<b:row>
+			<b:column span="6">
+				<b:image style="max-width: 75%; max-height: 75%"
+					value="batida-brasil.jpg" />
+			</b:column>
+			<b:column span="6">
+				<b:row>
+					<h:outputText styleClass="h1"
+						value="#{javaDatabase.getRecipeName()}" />
+					<b:dataTable value="#{javaDatabase.ingredients}"
+						var="ingredient" searching="false" paginated="false">
+						<b:dataTableColumn label="Zutaten" value="#{ingredient.name}" />
+						<b:dataTableColumn label="Menge" value="#{ingredient.amount} ml" />
+					</b:dataTable>
+					<h:form>
+						<b:commandButton value="Mix mir einen!" action="#{javaDatabase.onMixClick}"
+							look="info" />
+					</h:form>
+				</b:row>
+			</b:column>
+		</b:row>
+	</div>
+
+</h:body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+
+	<title>CocktailMaker</title>
+
+	<b:navBar brand="CocktailMaker" brandHref="#" inverse="true">
+		<b:navbarLinks>
+			<b:navLink value="Home" href="index.xhtml"></b:navLink>
+			<b:navLink value="Einstellungen" href="configuration.xhtml"></b:navLink>
+		</b:navbarLinks>
+	</b:navBar>
+</h:head>
+
+<h:body>
+
+	<div id="header">
+		<ui:insert name="header">
+		</ui:insert>
+	</div>
+
+	<div id="content"
+		style="margin-top: 100px; margin-left: 100px; margin-right: 100px">
+		<h:form>
+			<b:dataTable value="#{javaDatabase.getRecipes()}" var="recipe"
+				searchable="true">
+				<b:dataTableColumn value="#{recipe.name}">
+					<div align="right">
+						<b:commandButton id="submit" action="#{javaDatabase.onRecipeClick}"
+							value="Zum Cocktail">
+							<f:param name="id" value="#{recipe.id}" />
+						</b:commandButton>
+					</div>
+				</b:dataTableColumn>
+			</b:dataTable>
+		</h:form>
+	</div>
+
+</h:body>
+
+</html>

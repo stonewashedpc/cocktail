@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+
+	<title>CocktailMaker</title>
+
+	<b:navBar brand="CocktailMaker" brandHref="#" inverse="true">
+		<b:navbarLinks>
+			<b:navLink value="Home" href="index.xhtml"></b:navLink>
+			<b:navLink value="Einstellungen" href="configuration.xhtml"></b:navLink>
+		</b:navbarLinks>
+	</b:navBar>
+</h:head>
+
+<h:body>
+
+	<div id="header">
+		<ui:insert name="header">
+		</ui:insert>
+	</div>
+
+	<b:container>
+		<div id="content" style="">
+
+			<b:accordion>
+				<b:panel title="Pumpe hinzufügen" collapsed="true">
+					<b:form>
+						<b:formGroup>
+							<b:selectOneMenu value="#{javaDatabase.gpio}" required="true"
+								label="GPIO Pin">
+								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
+								<f:selectItems value="#{javaDatabase.allGpios}" var="gpio"
+									itemValue="#{gpio}" />
+							</b:selectOneMenu>
+							<b:selectOneMenu value="#{javaDatabase.ingredient}"
+								select2="true" required="true" label="Zutat">
+								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
+								<f:selectItems value="#{javaDatabase.allIngredients}"
+									var="ingredient" itemValue="#{ingredient.id}"
+									itemLabel="#{ingredient.name}" />
+							</b:selectOneMenu>
+							<b:touchSpin label="Flussrate in ml/min" required="true"
+								id="rate" value="#{javaDatabase.flowrate}" min="10" max="495"
+								step="5" />
+						</b:formGroup>
+						<b:commandButton value="Hinzufügen"
+							action="#{javaDatabase.onAddPumpClick}" />
+					</b:form>
+				</b:panel>
+
+				<b:panel title="Alle Pumpen ansteuern" collapsed="true">
+					<b:form>
+						<b:buttonGroup>
+							<b:commandButton value="2s Pulse"
+								action="#{javaDatabase.pumpPulse(2)}" />
+							<b:commandButton value="5s Pulse"
+								action="#{javaDatabase.pumpPulse(5)}" />
+							<b:commandButton value="10s Pulse"
+								action="#{javaDatabase.pumpPulse(10)}" />
+							<b:commandButton value="30s Pulse"
+								action="#{javaDatabase.pumpPulse(30)}" />
+						</b:buttonGroup>
+					</b:form>
+				</b:panel>
+			</b:accordion>
+
+
+			<b:form>
+				<b:dataTable value="#{javaDatabase.pumps}" var="pump"
+					searching="false">
+					<b:dataTableColumn label="Pin" value="#{pump.GPIO}" />
+					<b:dataTableColumn label="Zutat" value="#{pump.ingredientName}" />
+					<b:dataTableColumn label="Flussrate"
+						value="#{pump.pumpSpeed} ml/min" />
+					<b:dataTableColumn label="Löschen">
+						<b:commandButton look="danger" id="submit"
+							action="#{javaDatabase.onDeletePumpClick}" value="X">
+							<f:param name="gpio" value="#{pump.GPIO}" />
+						</b:commandButton>
+					</b:dataTableColumn>
+				</b:dataTable>
+			</b:form>
+
+		</div>
+	</b:container>
+
+</h:body>
+
+</html>
