@@ -20,7 +20,7 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-import com.stonewashedpc.cocktailmaker.ingredients.Amount;
+
 import com.stonewashedpc.cocktailmaker.ingredients.Ingredient;
 import com.stonewashedpc.cocktailmaker.ingredients.IngredientBoundary;
 import com.stonewashedpc.cocktailmaker.pumps.Pump;
@@ -45,9 +45,9 @@ public class JavaDatabase implements Serializable {
 
 	private List<Pump> pumps;
 
-	private int recipe_id = 1;
+	private int recipeId = 1;
 
-	private String recipe_name = "";
+	private String recipeName = "";
 
 	@Inject
 	private RecipeBoundary recipeBoundary;
@@ -80,23 +80,23 @@ public class JavaDatabase implements Serializable {
 	}
 
 	public String getRecipeName() {
-		return recipe_name;
+		return recipeName;
 	}
 
 	public int getRecipeId() {
-		return recipe_id;
+		return recipeId;
 	}
 
 	public String onRecipeClick() {
 		// Get parameter (recipe-)id (f:param)
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
-		recipe_id = Integer.valueOf(params.get("id"));
+		recipeId = Integer.valueOf(params.get("id"));
 		// Find all ingredients for this recipe(-id)
-		ingredients = ingredientBoundary.findIngredientsByRecipe(recipe_id);
+		ingredients = ingredientBoundary.findIngredientsByRecipe(recipeId);
 		// Get Name of this recipe(-id)
-		Optional<Recipe> recipe = recipes.stream().filter(r -> r.getId() == recipe_id).findFirst();
-		recipe_name = recipe.get().getName();
+		Optional<Recipe> recipe = recipes.stream().filter(r -> r.getId() == recipeId).findFirst();
+		recipeName = recipe.get().getName();
 		// Find Recipe Amounts
 		// amounts = ingredientBoundary.findIngredientAmounts(recipe_id);
 		// Redirect to view.xhtml
@@ -106,6 +106,7 @@ public class JavaDatabase implements Serializable {
 	// *******************************************
 	// ** This is part of the view.xhtml
 	// *******************************************
+	
 	public void onMixClick() {
 
 		LOG.info("starting onMixClick");

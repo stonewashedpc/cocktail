@@ -34,15 +34,15 @@ public class Pump {
 	}
 
 	@Id
-	@Column(name = "INGREDIENT_ID")
-	private int ingredient_id;
+	@Column(name = "INGREDIENTID")
+	private int ingredientId;
 
 	public int getIngredientId() {
-		return ingredient_id;
+		return ingredientId;
 	}
 
-	public void setIngredientId(int ingredient_id) {
-		this.ingredient_id = ingredient_id;
+	public void setIngredientId(int ingredientId) {
+		this.ingredientId = ingredientId;
 	}
 	
 	@Id
