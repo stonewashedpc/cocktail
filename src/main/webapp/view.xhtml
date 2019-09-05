@@ -31,20 +31,20 @@
 		<b:row>
 			<b:column span="6">
 				<o:graphicImage style="max-width: 75%; max-height: 75%"
-					value="#{imageBean.getImageBytes(javaDatabase.recipeId)}" />
+					value="#{imageBean.getImageBytes(main.recipeId)}" />
 			</b:column>
 			<b:column span="6">
 				<b:row>
 					<h:outputText styleClass="h1"
-						value="#{javaDatabase.getRecipeName()}" />
-					<b:dataTable value="#{javaDatabase.ingredients}" var="ingredient"
+						value="#{main.getRecipeName()}" />
+					<b:dataTable value="#{main.ingredients}" var="ingredient"
 						searching="false" paginated="false">
 						<b:dataTableColumn label="Zutaten" value="#{ingredient.name}" />
 						<b:dataTableColumn label="Menge" value="#{ingredient.amount} ml" />
 					</b:dataTable>
 					<h:form>
 						<b:commandButton value="Mix mir einen!"
-							action="#{javaDatabase.onMixClick}" look="info" />
+							action="#{main.onMixClick}" look="info" />
 					</h:form>
 				</b:row>
 			</b:column>

@@ -32,12 +32,13 @@ public class CocktailImageBoundary implements Serializable {
 			// Create statement
 			Statement stmt = conn.createStatement();
 			// Execute and convert to ArrayList
-			ResultSet rs = stmt.executeQuery(
-					"select * from cocktail_images where recipe_id = " + recipe_id);
-			rs.first();
+			ResultSet rs = stmt.executeQuery("select * from cocktail_images where recipe_id = " + recipe_id);
+			
 			Blob blob = rs.getBlob("blob");
 			byte_array = blob.getBytes(1, (int) blob.length());
 			
+			blob.free();
+
 			// Close connection
 			conn.close();
 		} catch (SQLException | ClassNotFoundException e) {

@@ -31,25 +31,25 @@
 				<b:panel title="Pumpe hinzufügen" collapsed="true">
 					<b:form>
 						<b:formGroup>
-							<b:selectOneMenu value="#{javaDatabase.gpio}" required="true"
+							<b:selectOneMenu value="#{main.gpio}" required="true"
 								label="GPIO Pin">
 								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
-								<f:selectItems value="#{javaDatabase.allGpios}" var="gpio"
+								<f:selectItems value="#{main.allGpios}" var="gpio"
 									itemValue="#{gpio}" />
 							</b:selectOneMenu>
-							<b:selectOneMenu value="#{javaDatabase.ingredient}"
+							<b:selectOneMenu value="#{main.ingredient}"
 								select2="true" required="true" label="Zutat">
 								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
-								<f:selectItems value="#{javaDatabase.allIngredients}"
+								<f:selectItems value="#{main.allIngredients}"
 									var="ingredient" itemValue="#{ingredient.id}"
 									itemLabel="#{ingredient.name}" />
 							</b:selectOneMenu>
 							<b:touchSpin label="Flussrate in ml/min" required="true"
-								id="rate" value="#{javaDatabase.flowrate}" min="10" max="495"
+								id="rate" value="#{main.flowrate}" min="10" max="495"
 								step="5" />
 						</b:formGroup>
 						<b:commandButton value="Hinzufügen"
-							action="#{javaDatabase.onAddPumpClick}" />
+							action="#{main.onAddPumpClick}" />
 					</b:form>
 				</b:panel>
 
@@ -57,13 +57,13 @@
 					<b:form>
 						<b:buttonGroup>
 							<b:commandButton value="2s Pulse"
-								action="#{javaDatabase.pumpPulse(2)}" />
+								action="#{main.pumpPulse(2)}" />
 							<b:commandButton value="5s Pulse"
-								action="#{javaDatabase.pumpPulse(5)}" />
+								action="#{main.pumpPulse(5)}" />
 							<b:commandButton value="10s Pulse"
-								action="#{javaDatabase.pumpPulse(10)}" />
+								action="#{main.pumpPulse(10)}" />
 							<b:commandButton value="30s Pulse"
-								action="#{javaDatabase.pumpPulse(30)}" />
+								action="#{main.pumpPulse(30)}" />
 						</b:buttonGroup>
 					</b:form>
 				</b:panel>
@@ -71,7 +71,7 @@
 
 
 			<b:form>
-				<b:dataTable value="#{javaDatabase.pumps}" var="pump"
+				<b:dataTable value="#{main.pumps}" var="pump"
 					searching="false">
 					<b:dataTableColumn label="Pin" value="#{pump.GPIO}" />
 					<b:dataTableColumn label="Zutat" value="#{pump.ingredientName}" />
@@ -79,7 +79,7 @@
 						value="#{pump.pumpSpeed} ml/min" />
 					<b:dataTableColumn label="Löschen">
 						<b:commandButton look="danger" id="submit"
-							action="#{javaDatabase.onDeletePumpClick}" value="X">
+							action="#{main.onDeletePumpClick}" value="X">
 							<f:param name="gpio" value="#{pump.GPIO}" />
 						</b:commandButton>
 					</b:dataTableColumn>

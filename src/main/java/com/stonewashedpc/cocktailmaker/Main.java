@@ -30,9 +30,9 @@ import com.stonewashedpc.cocktailmaker.recipies.RecipeBoundary;
 
 @Named
 @SessionScoped
-public class JavaDatabase implements Serializable {
+public class Main implements Serializable {
 
-	private static final Logger LOG = Logger.getLogger(JavaDatabase.class.getSimpleName());
+	private static final Logger LOG = Logger.getLogger(Main.class.getSimpleName());
 
 	/**
 	 * 

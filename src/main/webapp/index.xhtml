@@ -27,11 +27,11 @@
 	<div id="content"
 		style="margin-top: 100px; margin-left: 100px; margin-right: 100px">
 		<h:form>
-			<b:dataTable value="#{javaDatabase.getRecipes()}" var="recipe"
+			<b:dataTable value="#{main.getRecipes()}" var="recipe"
 				searchable="true">
 				<b:dataTableColumn value="#{recipe.name}">
 					<div align="right">
-						<b:commandButton id="submit" action="#{javaDatabase.onRecipeClick}"
+						<b:commandButton id="submit" action="#{main.onRecipeClick}"
 							value="Zum Cocktail">
 							<f:param name="id" value="#{recipe.id}" />
 						</b:commandButton>
