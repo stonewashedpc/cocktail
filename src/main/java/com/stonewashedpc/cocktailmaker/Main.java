@@ -107,12 +107,24 @@ public class Main implements Serializable {
 	// ** This is part of the view.xhtml
 	// *******************************************
 	
+	private float drinkSize;
+	
+	public float getDrinkSize() {
+		return drinkSize;
+	}
+
+	public void setDrinkSize(float amount) {
+		this.drinkSize = amount;
+	}
+	
+	private float ingredientAmountDenominator;
+	
 	public void onMixClick() {
 
 		LOG.info("starting onMixClick");
 
 		final Map<Integer, Pin> gpio_map = new HashMap<Integer, Pin>();
-
+		
 		gpio_map.put(1, RaspiPin.GPIO_01);
 		gpio_map.put(2, RaspiPin.GPIO_02);
 		gpio_map.put(3, RaspiPin.GPIO_03);
@@ -131,6 +143,11 @@ public class Main implements Serializable {
 		gpio_map.put(16, RaspiPin.GPIO_16);
 
 		final GpioController gpio = GpioFactory.getInstance();
+		
+		ingredientAmountDenominator = 0;
+		ingredients.forEach(ingredient -> {
+			ingredientAmountDenominator += ingredient.getAmount();
+		});
 
 		ingredients.forEach(ingredient -> {
 
@@ -138,7 +155,7 @@ public class Main implements Serializable {
 					ingredient.getName() + " Id: " + ingredient.getId() + " Amount: " + ingredient.getAmount());
 
 			int id = ingredient.getId();
-			float amount = ingredient.getAmount();
+			float ingredientAmountNominator = ingredient.getAmount();
 
 			Optional<Pump> optional_pump = pumps.stream().filter(p -> p.getIngredientId() == id).findFirst();
 
@@ -147,7 +164,11 @@ public class Main implements Serializable {
 			float pump_speed = pump.getPumpSpeed();
 
 			int pump_gpio = pump.getGPIO();
-			float time = amount * 60000 / pump_speed;
+			
+			//Calculate ingredient's share of recipe
+			//Multiply by overall drink size to get ingredient amount in ml
+			//Get time in milliseconds by multiplying by 60000 and dividing by pump's pumping speed
+			float time = ((ingredientAmountNominator/ingredientAmountDenominator) * drinkSize) * 60000 / pump_speed;
 
 			LOG.log(Level.INFO, "filling {0} using pump {1} for {2}ms",
 					new Object[] { ingredient.getName(), pump.getIngredientId(), time });

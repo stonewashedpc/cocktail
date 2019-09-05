@@ -35,17 +35,25 @@
 			</b:column>
 			<b:column span="6">
 				<b:row>
-					<h:outputText styleClass="h1"
-						value="#{main.getRecipeName()}" />
+					<h:outputText styleClass="h1" value="#{main.getRecipeName()}" />
 					<b:dataTable value="#{main.ingredients}" var="ingredient"
 						searching="false" paginated="false">
 						<b:dataTableColumn label="Zutaten" value="#{ingredient.name}" />
 						<b:dataTableColumn label="Menge" value="#{ingredient.amount} ml" />
 					</b:dataTable>
-					<h:form>
-						<b:commandButton value="Mix mir einen!"
-							action="#{main.onMixClick}" look="info" />
-					</h:form>
+					<b:form>
+						<b:formGroup>
+							<b:selectOneMenu value="#{main.drinkSize}" colMd="4" required="true">
+								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
+								<f:selectItem itemLabel="100ml" itemValue="100" />
+								<f:selectItem itemLabel="150ml" itemValue="150" />
+								<f:selectItem itemLabel="200ml" itemValue="200" />
+								<f:selectItem itemLabel="250ml" itemValue="250" />
+							</b:selectOneMenu>
+							<b:commandButton value="Mix mir einen!"
+								action="#{main.onMixClick}" look="info" />
+						</b:formGroup>
+					</b:form>
 				</b:row>
 			</b:column>
 		</b:row>
