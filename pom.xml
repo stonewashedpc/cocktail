@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>com.pi4j</groupId>
 			<artifactId>pi4j-core</artifactId>
-			<version>1.4-SNAPSHOT</version>
+			<version>1.2</version>
 		</dependency>
 
 		<dependency>
@@ -55,7 +55,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.4.199</version>
+			<version>1.4.200</version>
 		</dependency>
 
 

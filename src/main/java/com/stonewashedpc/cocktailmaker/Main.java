@@ -102,13 +102,13 @@ public class Main implements Serializable {
 		// Redirect to view.xhtml
 		return "view.xhtml";
 	}
-	
+
 	// *******************************************
 	// ** This is part of the view.xhtml
 	// *******************************************
-	
+
 	private float drinkSize;
-	
+
 	public float getDrinkSize() {
 		return drinkSize;
 	}
@@ -116,34 +116,34 @@ public class Main implements Serializable {
 	public void setDrinkSize(float amount) {
 		this.drinkSize = amount;
 	}
-	
+
 	private float ingredientAmountDenominator;
-	
+
 	public void onMixClick() {
 
 		LOG.info("starting onMixClick");
 
 		final Map<Integer, Pin> gpio_map = new HashMap<Integer, Pin>();
-		
-		gpio_map.put(1, RaspiPin.GPIO_01);
-		gpio_map.put(2, RaspiPin.GPIO_02);
-		gpio_map.put(3, RaspiPin.GPIO_03);
-		gpio_map.put(4, RaspiPin.GPIO_04);
-		gpio_map.put(5, RaspiPin.GPIO_05);
-		gpio_map.put(6, RaspiPin.GPIO_06);
-		gpio_map.put(7, RaspiPin.GPIO_07);
-		gpio_map.put(8, RaspiPin.GPIO_08);
-		gpio_map.put(9, RaspiPin.GPIO_09);
-		gpio_map.put(10, RaspiPin.GPIO_10);
-		gpio_map.put(11, RaspiPin.GPIO_11);
-		gpio_map.put(12, RaspiPin.GPIO_12);
-		gpio_map.put(13, RaspiPin.GPIO_13);
-		gpio_map.put(14, RaspiPin.GPIO_14);
-		gpio_map.put(15, RaspiPin.GPIO_15);
-		gpio_map.put(16, RaspiPin.GPIO_16);
+
+		gpio_map.put(1, RaspiPin.GPIO_00);
+		gpio_map.put(2, RaspiPin.GPIO_01);
+		gpio_map.put(3, RaspiPin.GPIO_02);
+		gpio_map.put(4, RaspiPin.GPIO_03);
+		gpio_map.put(5, RaspiPin.GPIO_04);
+		gpio_map.put(6, RaspiPin.GPIO_05);
+		gpio_map.put(7, RaspiPin.GPIO_06);
+		gpio_map.put(8, RaspiPin.GPIO_07);
+		gpio_map.put(9, RaspiPin.GPIO_08);
+		gpio_map.put(10, RaspiPin.GPIO_09);
+		gpio_map.put(11, RaspiPin.GPIO_10);
+		gpio_map.put(12, RaspiPin.GPIO_11);
+		gpio_map.put(13, RaspiPin.GPIO_12);
+		gpio_map.put(14, RaspiPin.GPIO_13);
+		gpio_map.put(15, RaspiPin.GPIO_14);
+		gpio_map.put(16, RaspiPin.GPIO_15);
 
 		final GpioController gpio = GpioFactory.getInstance();
-		
+
 		ingredientAmountDenominator = 0;
 		ingredients.forEach(ingredient -> {
 			ingredientAmountDenominator += ingredient.getAmount();
@@ -164,11 +164,12 @@ public class Main implements Serializable {
 			float pump_speed = pump.getPumpSpeed();
 
 			int pump_gpio = pump.getGPIO();
-			
-			//Calculate ingredient's share of recipe
-			//Multiply by overall drink size to get ingredient amount in ml
-			//Get time in milliseconds by multiplying by 60000 and dividing by pump's pumping speed
-			float time = ((ingredientAmountNominator/ingredientAmountDenominator) * drinkSize) * 60000 / pump_speed;
+
+			// Calculate ingredient's share of recipe
+			// Multiply by overall drink size to get ingredient amount in ml
+			// Get time in milliseconds by multiplying by 60000 and dividing by pump's
+			// pumping speed
+			float time = ((ingredientAmountNominator / ingredientAmountDenominator) * drinkSize) * 60000 / pump_speed;
 
 			LOG.log(Level.INFO, "filling {0} using pump {1} for {2}ms",
 					new Object[] { ingredient.getName(), pump.getIngredientId(), time });
@@ -195,62 +196,60 @@ public class Main implements Serializable {
 
 		gpio.shutdown();
 	}
-	
+
 	// *******************************************
 	// ** This is part of the configuration.xhtml
 	// *******************************************
 	private int flowrate;
 	private int gpio;
 	private int ingredient;
-	
-	
+
 	private List<Ingredient> allIngredients;
-	private int[] allGpios = {1,2,3,4,5,6,7,8};
-	
-	
+	private int[] allGpios = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
 	public void onDeletePumpClick() {
 
 		// Get parameter gpio (f:param)
 		FacesContext fc = FacesContext.getCurrentInstance();
 		Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
 		int gpio = Integer.valueOf(params.get("gpio"));
-		
-		//Delete Pump
+
+		// Delete Pump
 		pumpBoundary.deletePump(gpio);
-		
-		//Reload possible recipes and pumps from database
+
+		// Reload possible recipes and pumps from database
 		reloadDb();
 	}
-	
+
 	public void onAddPumpClick() {
-		
+
 		pumpBoundary.addPump(gpio, ingredient, flowrate);
-		//Reload possible recipes and pumps from database
+		// Reload possible recipes and pumps from database
 		reloadDb();
 	}
-	
+
 	public void pumpPulse(int time) {
 
 		LOG.info("starting pumpPulse");
 
 		final Map<Integer, Pin> gpio_map = new HashMap<Integer, Pin>();
 		
-		gpio_map.put(1, RaspiPin.GPIO_01);
-		gpio_map.put(2, RaspiPin.GPIO_02);
-		gpio_map.put(3, RaspiPin.GPIO_03);
-		gpio_map.put(4, RaspiPin.GPIO_04);
-		gpio_map.put(5, RaspiPin.GPIO_05);
-		gpio_map.put(6, RaspiPin.GPIO_06);
-		gpio_map.put(7, RaspiPin.GPIO_07);
-		gpio_map.put(8, RaspiPin.GPIO_08);
-		gpio_map.put(9, RaspiPin.GPIO_09);
-		gpio_map.put(10, RaspiPin.GPIO_10);
-		gpio_map.put(11, RaspiPin.GPIO_11);
-		gpio_map.put(12, RaspiPin.GPIO_12);
-		gpio_map.put(13, RaspiPin.GPIO_13);
-		gpio_map.put(14, RaspiPin.GPIO_14);
-		gpio_map.put(15, RaspiPin.GPIO_15);
-		gpio_map.put(16, RaspiPin.GPIO_16);
+		gpio_map.put(1, RaspiPin.GPIO_00);
+		gpio_map.put(2, RaspiPin.GPIO_01);
+		gpio_map.put(3, RaspiPin.GPIO_02);
+		gpio_map.put(4, RaspiPin.GPIO_03);
+		gpio_map.put(5, RaspiPin.GPIO_04);
+		gpio_map.put(6, RaspiPin.GPIO_05);
+		gpio_map.put(7, RaspiPin.GPIO_06);
+		gpio_map.put(8, RaspiPin.GPIO_07);
+		gpio_map.put(9, RaspiPin.GPIO_08);
+		gpio_map.put(10, RaspiPin.GPIO_09);
+		gpio_map.put(11, RaspiPin.GPIO_10);
+		gpio_map.put(12, RaspiPin.GPIO_11);
+		gpio_map.put(13, RaspiPin.GPIO_12);
+		gpio_map.put(14, RaspiPin.GPIO_13);
+		gpio_map.put(15, RaspiPin.GPIO_14);
+		gpio_map.put(16, RaspiPin.GPIO_15);
 
 		final GpioController gpio = GpioFactory.getInstance();
 
@@ -258,8 +257,7 @@ public class Main implements Serializable {
 
 			int pump_gpio = pump.getGPIO();
 
-			LOG.log(Level.INFO, "Pump {0} on for {1}ms",
-					new Object[] { pump.getGPIO(), time*1000 });
+			LOG.log(Level.INFO, "Pump {0} on for {1}ms", new Object[] { pump.getGPIO(), time * 1000 });
 
 			final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(gpio_map.get(pump_gpio), "Pump",
 					PinState.HIGH);
@@ -270,7 +268,7 @@ public class Main implements Serializable {
 				pin.low();
 				LOG.log(Level.INFO, "Start");
 
-				Thread.sleep((long) (time*1000));
+				Thread.sleep((long) (time * 1000));
 
 				pin.high();
 				LOG.log(Level.INFO, "Stop");

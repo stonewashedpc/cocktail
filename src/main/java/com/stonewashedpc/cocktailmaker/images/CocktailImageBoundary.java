@@ -34,6 +34,8 @@ public class CocktailImageBoundary implements Serializable {
 			// Execute and convert to ArrayList
 			ResultSet rs = stmt.executeQuery("select * from cocktail_images where recipe_id = " + recipe_id);
 			
+			rs.first();
+			
 			Blob blob = rs.getBlob("blob");
 			byte_array = blob.getBytes(1, (int) blob.length());
 			
